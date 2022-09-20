@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ForwardRefRenderFunction } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import Select from 'react-select';
+import { StateManagerProps } from 'react-select/dist/declarations/src/useStateManager';
+import CustomSelect from './Select';
 
 function App() {
+  const { control, handleSubmit, register, formState } = useForm();
+
+  const { errors } = formState;
+
+  function formSubmit(data: any) {
+    console.log(data);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <form onSubmit={handleSubmit(formSubmit)}>
+      <CustomSelect
+        placeholder="Selecione um ponto focal..."
+        label="Ponto Focal | Educacional"
+        name="focalAndEducacionalPoint"
+        register={{ ...register('focalAndEducacionalPoint') }}
+        control={control}
+      />
+      <button type="submit">Testar</button>
+    </form>
   );
 }
 
